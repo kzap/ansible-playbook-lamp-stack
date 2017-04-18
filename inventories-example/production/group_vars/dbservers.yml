@@ -2,6 +2,11 @@
 # The variables file used by the playbooks in the dbservers group.
 # These don't have to be explicitly imported by vars_files: they are autopopulated.
 
+## OS Packages
+# if you do not want to install the default packages, set dbservers_os_packages to an empty object array []
+#dbservers_os_packages: []
+dbservers_os_extra_packages: []
+
 ## mysql role
 mysqlservice: mysqld
 

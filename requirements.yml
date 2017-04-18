@@ -1,9 +1,33 @@
 # from galaxy
-- src: https://github.com/geerlingguy/ansible-role-firewall
-- src: https://github.com/willshersystems/ansible-sshd
-- src: https://github.com/willshersystems/ansible-users
-- src: https://github.com/Oefenweb/ansible-fail2ban
-- src: https://github.com/geerlingguy/ansible-role-apache
-- src: https://github.com/kzap/ansible-role-mysql
-- src: https://github.com/kzap/ansible-role-centos7
-- src: https://github.com/kzap/ansible-role-centos7-php56
+- src: "https://github.com/geerlingguy/ansible-role-firewall"
+  version: "46b314d"
+
+- src: "https://github.com/willshersystems/ansible-sshd"
+  version: "5749930"
+
+- src: "https://github.com/willshersystems/ansible-users"
+  version: "d179aac"
+
+- src: "https://github.com/Oefenweb/ansible-fail2ban"
+  version: "e75a3ed"
+
+- src: "linuxhq.epel"
+  version: 75f6613
+
+- src: "linuxhq.ius"
+  version: "12d2128"
+
+- src: "https://github.com/geerlingguy/ansible-role-repo-remi"
+  version: "d5f58c3"
+
+- src: "https://github.com/kzap/ansible-role-default-packages"
+  version: "1a3f18c"
+
+- src: "https://github.com/geerlingguy/ansible-role-apache"
+  version: "586bcf7"
+
+- src: "https://github.com/geerlingguy/ansible-role-php"
+  version: "cfe3aae"
+
+- src: "https://github.com/kzap/ansible-role-mysql"
+  version: "6a57aab"
