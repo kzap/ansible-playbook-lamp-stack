@@ -19,6 +19,16 @@ remote_port: 2222
 #   If we should use sudo/su
 become: true
 
+## RedHat Only Extra Repo
+# Installs the IUS or REMI Repo
+ius_or_remi: "IUS"
+
+## OS Packages
+# Installs packages for your OS
+# if you do not want to install the default packages, set all_os_packages to an empty object array []
+#all_os_packages: []
+all_os_extra_packages: []
+
 ## willshersystems.users role
 # Documentation: https://github.com/willshersystems/ansible-users/blob/master/README.md
 # Make sure passwords you put here are encrypted using passlib:
