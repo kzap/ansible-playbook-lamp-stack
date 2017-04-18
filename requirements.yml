@@ -1,0 +1,9 @@
+# from galaxy
+- src: https://github.com/geerlingguy/ansible-role-firewall
+- src: https://github.com/willshersystems/ansible-sshd
+- src: https://github.com/willshersystems/ansible-users
+- src: https://github.com/Oefenweb/ansible-fail2ban
+- src: https://github.com/geerlingguy/ansible-role-apache
+- src: https://github.com/kzap/ansible-role-mysql
+- src: https://github.com/kzap/ansible-role-centos7
+- src: https://github.com/kzap/ansible-role-centos7-php56
