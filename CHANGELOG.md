@@ -1,4 +1,9 @@
 
+0.2.1 / 2017-04-19
+==================
+
+  * - update mysql role version - adding SSLCACertificateFile to apache_vhosts template
+
 0.2 / 2017-04-19
 ================
 
