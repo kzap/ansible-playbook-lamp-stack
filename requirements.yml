@@ -30,4 +30,4 @@
   version: "cfe3aae"
 
 - src: "https://github.com/kzap/ansible-role-mysql"
-  version: "6a57aab"
+  version: "cae35b0"

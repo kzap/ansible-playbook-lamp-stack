@@ -66,6 +66,9 @@
 {% if vhost.certificate_chain_file is defined %}
   SSLCertificateChainFile {{ vhost.certificate_chain_file }}
 {% endif %}
+{% if vhost.ca_certificate_file is defined %}
+  SSLCACertificateFile {{ vhost.ca_certificate_file }}
+{% endif %}
 
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
