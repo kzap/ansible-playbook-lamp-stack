@@ -1,0 +1,91 @@
+---
+# This playbook deploys the whole LAMP stack and secures it
+- name: Initial Local Setup
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Set SSH Connection Variables on First Run"
+      set_fact:
+        ansible_user: "{{ first_run_remote_user | default('root') }}"
+        ansible_port: "{{ first_run_remote_port | default('22') }}"
+        ansible_become: "{{ first_run_become | default(false) }}"
+      when: "{{ first_run | default(false) }}"
+
+    - name: "Set SSH Connection Variables"
+      set_fact:
+        ansible_user: "{{ remote_user | default('root') }}"
+        ansible_port: "{{ remote_port | default('22') }}"
+        ansible_become: "{{ become | default(false) }}"
+      when: "not {{ first_run | default(false) }}"
+  
+- name: Initial Setup of Server
+  hosts: all
+  roles:
+    - { role: "galaxy-roles/ansible-role-centos7" }
+    - { 
+      role: "galaxy-roles/ansible-users",
+      users_admin_sudo_password: false
+    }
+    - { role: "galaxy-roles/ansible-sshd" }
+
+- name: Re-Set Initial Connection Variables
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Set SSH Connection Variables"
+      set_fact:
+        ansible_user: "{{ remote_user | default('root') }}"
+        ansible_port: "{{ remote_port | default('22') }}"
+        ansible_become: "{{ become | default(false) }}"
+
+- name: Lock down firewall
+  hosts: all
+  pre_tasks:
+    - name: Merge the Firewall Ports
+      set_fact:
+        merged_firewall_allowed_tcp_ports: "{{ all_firewall_allowed_tcp_ports | default([]) }}"
+
+  roles:
+    - { 
+      role: "galaxy-roles/ansible-role-firewall",
+      firewall_allowed_tcp_ports: "{{ merged_firewall_allowed_tcp_ports | default([]) | unique }}"
+    }
+
+- name: Configure and deploy the webservers
+  hosts: webservers
+  
+  pre_tasks:
+    - name: Merge the Firewall Ports
+      set_fact:
+        merged_firewall_allowed_tcp_ports: "{{ merged_firewall_allowed_tcp_ports | default([]) }} + {{ webservers_firewall_allowed_tcp_ports | default([]) }}"
+    
+  roles:
+    - {
+      role: "galaxy-roles/ansible-role-apache",
+      apache_create_vhosts: false,
+      apache_state: stopped
+    }
+    - { role: "galaxy-roles/ansible-role-centos7-php56" }
+    - {
+      role: "galaxy-roles/ansible-role-apache",
+      apache_ignore_missing_ssl_certificate: false
+    }
+    - { 
+      role: "galaxy-roles/ansible-role-firewall",
+      firewall_allowed_tcp_ports: "{{ merged_firewall_allowed_tcp_ports | default([]) | unique }}"
+    }
+
+- name: Deploy MySQL and configure the databases
+  hosts: dbservers
+
+  pre_tasks:
+    - name: Merge the Firewall Ports
+      set_fact:
+        merged_firewall_allowed_tcp_ports: "{{ merged_firewall_allowed_tcp_ports | default([]) }} + {{ dbservers_firewall_allowed_tcp_ports | default([]) }}"
+
+  roles:
+    - { role: "galaxy-roles/ansible-role-mysql" }
+    - { 
+      role: "galaxy-roles/ansible-role-firewall",
+      firewall_allowed_tcp_ports: "{{ merged_firewall_allowed_tcp_ports | default([]) | unique }}"
+    }

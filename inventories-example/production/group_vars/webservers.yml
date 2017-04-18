@@ -1,0 +1,13 @@
+---
+# The variables file used by the playbooks in the webservers group.
+# These don't have to be explicitly imported by vars_files: they are autopopulated.
+
+# geerlingguy.apache role
+# Apache settings are in group_vars/webservers/apache*
+
+# geerlingguy.firewall role
+# Documentation: https://github.com/geerlingguy/ansible-role-firewall/blob/master/README.md
+# All Servers have these firewall ports opened, gets merged with firewall ports in other group settings
+webservers_firewall_allowed_tcp_ports:
+  - "80" # Default web traffic port
+  - "443" # SSL web traffic port
