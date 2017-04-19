@@ -9,7 +9,7 @@
         ansible_user: "{{ first_run_remote_user | default('root') }}"
         ansible_port: "{{ first_run_remote_port | default('22') }}"
         ansible_become: "{{ first_run_become | default(false) }}"
-      when: "{{ first_run | default(false) }}"
+      when: "first_run | default(false)"
       tags: local_init
 
     - name: "Set SSH Connection Variables"
@@ -17,7 +17,7 @@
         ansible_user: "{{ remote_user | default('root') }}"
         ansible_port: "{{ remote_port | default('22') }}"
         ansible_become: "{{ become | default(false) }}"
-      when: "not {{ first_run | default(false) }}"
+      when: "not (first_run | default(false))"
       tags: local_init
   
 - name: Initial Setup of Server Packages
