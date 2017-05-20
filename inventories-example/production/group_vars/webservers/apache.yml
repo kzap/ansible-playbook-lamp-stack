@@ -4,7 +4,11 @@
 
 ## geerlingguy.apache role
 # Documentation: https://github.com/geerlingguy/ansible-role-apache/blob/master/README.md
-apache_vhosts_template: "{{ playbook_dir }}/templates/apache_vhosts.conf.j2"
+apache_vhosts_template: "{{ playbook_dir }}/templates/apache_vhosts.conf.j2"\
+
+apache_config_files: []
+#  - src: "{{ inventory_dir }}/templates/apache/conf.d/server_status.conf.j2"
+#    dest: "conf.d/server_status.conf"
 
 # Regular Virtual Hosts
 apache_vhosts:

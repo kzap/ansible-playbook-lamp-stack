@@ -19,5 +19,6 @@ php_packages_extra: []
 # Documentation: https://github.com/geerlingguy/ansible-role-firewall/blob/master/README.md
 # All Servers have these firewall ports opened, gets merged with firewall ports in other group settings
 webservers_firewall_allowed_tcp_ports:
+  - "25" # Port for incoming mail
   - "80" # Default web traffic port
   - "443" # SSL web traffic port
