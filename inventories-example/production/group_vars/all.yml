@@ -66,5 +66,4 @@ sshd:
 # Documentation: https://github.com/geerlingguy/ansible-role-firewall/blob/master/README.md
 # All Servers have these firewall ports opened, gets merged with firewall ports in other group settings
 all_firewall_allowed_tcp_ports:
-  - "25" # Usually for Mail
   - "2222" # Your main SSH port since we will block the default SSH port via the Firewall

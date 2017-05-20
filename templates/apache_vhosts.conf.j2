@@ -3,7 +3,9 @@
 {# Set up VirtualHosts #}
 {% for vhost in apache_vhosts %}
 <VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}>
+{% if vhost.servername is defined %}
   ServerName {{ vhost.servername }}
+{% endif %}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
@@ -32,11 +34,21 @@
 
   LogLevel error
 {% if ansible_os_family == "Debian" %}
+  {% if vhost.servername is defined %}  
   ErrorLog /var/log/apache2/{{ vhost.servername }}.error.log
   CustomLog /var/log/apache2/{{ vhost.servername }}.access.log combined
+  {% else %}
+  ErrorLog /var/log/apache2/error.log
+  CustomLog /var/log/apache2/access.log combined
+  {% endif %}
 {% else %}
+  {% if vhost.servername is defined %}  
   ErrorLog /var/log/httpd/{{ vhost.servername }}-error_log
   CustomLog /var/log/httpd/{{ vhost.servername }}-access_log combined
+  {% else %}
+  ErrorLog /var/log/httpd/error_log
+  CustomLog /var/log/httpd/access_log combined
+  {% endif %}
 {% endif %}
 </VirtualHost>
 
@@ -46,7 +58,9 @@
 {% for vhost in apache_vhosts_ssl %}
 {% if apache_ignore_missing_ssl_certificate or apache_ssl_certificates.results[loop.index0].stat.exists %}
 <VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port_ssl }}>
+{% if vhost.servername is defined %}
   ServerName {{ vhost.servername }}
+{% endif %}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
@@ -91,11 +105,21 @@
 
   LogLevel error
 {% if ansible_os_family == "Debian" %}
+  {% if vhost.servername is defined %}  
   ErrorLog /var/log/apache2/{{ vhost.servername }}.error.log
   CustomLog /var/log/apache2/{{ vhost.servername }}.access.log combined
+  {% else %}
+  ErrorLog /var/log/apache2/error.log
+  CustomLog /var/log/apache2/access.log combined
+  {% endif %}
 {% else %}
+  {% if vhost.servername is defined %}  
   ErrorLog /var/log/httpd/{{ vhost.servername }}-error_log
   CustomLog /var/log/httpd/{{ vhost.servername }}-access_log combined
+  {% else %}
+  ErrorLog /var/log/httpd/error_log
+  CustomLog /var/log/httpd/access_log combined
+  {% endif %}
 {% endif %}
 </VirtualHost>
 
